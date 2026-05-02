@@ -1,13 +1,11 @@
 import type { NextRequest } from "next/server";
 import type { Session } from "./auth/session";
 
-const IDENTITY_URL = "https://identity.meridian.internal/v2/verify";
-
 export async function verifySession(req: NextRequest): Promise<Session | null> {
   const token = req.headers.get("authorization")?.replace("Bearer ", "");
   if (!token) return null;
 
-  const res = await fetch(IDENTITY_URL, {
+  const res = await fetch("https://identity.meridian.internal/v2/verify", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
